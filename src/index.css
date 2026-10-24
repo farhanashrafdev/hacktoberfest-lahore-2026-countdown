@@ -1,0 +1,215 @@
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/jetbrains-mono';
+@import 'tailwindcss';
+
+/*
+ * Hacktoberfest-inspired palette. Tweak these tokens to match the official
+ * brand kit (https://hacktoberfest.com/brand) if needed — everything in the
+ * app reads from them.
+ */
+@theme {
+  --color-void: #170f1e;
+  --color-ink: #241a2e;
+  --color-mist: #efedef;
+  --color-pink: #ff8ae2;
+  --color-teal: #50e3c2;
+  --color-sun: #ffe27d;
+  --color-plum: #9c4668;
+  --color-ember: #ff8b3d;
+  --color-alarm: #ff5a4d;
+
+  --font-display: 'Space Grotesk Variable', 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo,
+    Consolas, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-void);
+  color: var(--color-mist);
+  font-family: var(--font-display);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cursor-hidden,
+.cursor-hidden * {
+  cursor: none !important;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'zero' 0;
+}
+
+/* ---------- Background motion (transform / opacity only) ---------- */
+.bg-grid {
+  position: absolute;
+  inset: -80px;
+  background-image:
+    linear-gradient(to right, rgb(239 237 239 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(239 237 239 / 0.055) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: grid-drift 24s linear infinite;
+  will-change: transform;
+}
+@keyframes grid-drift {
+  to {
+    transform: translate3d(80px, 80px, 0);
+  }
+}
+
+.float-up {
+  animation: float-up var(--dur, 30s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+@keyframes float-up {
+  0% {
+    transform: translate3d(0, 10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--o, 0.5);
+  }
+  90% {
+    opacity: var(--o, 0.5);
+  }
+  100% {
+    transform: translate3d(var(--dx, 0px), -110vh, 0) rotate(var(--rot, 0deg));
+    opacity: 0;
+  }
+}
+
+.spin-slow {
+  animation: spin-slow 60s linear infinite;
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bob {
+  animation: bob 9s ease-in-out infinite;
+}
+@keyframes bob {
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+.marquee {
+  animation: marquee var(--marquee-dur, 40s) linear infinite;
+  will-change: transform;
+}
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.live-dot {
+  animation: live-dot 2s ease-in-out infinite;
+}
+@keyframes live-dot {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.shipping-blink {
+  animation: shipping 18s ease-in-out infinite;
+}
+@keyframes shipping {
+  0%,
+  60%,
+  100% {
+    opacity: 0;
+  }
+  70%,
+  90% {
+    opacity: 1;
+  }
+}
+
+/* Animations-off toggle + OS reduced motion */
+.no-anim *,
+.no-anim *::before,
+.no-anim *::after {
+  animation: none !important;
+  transition: none !important;
+}
+.no-anim .float-up {
+  opacity: 0 !important;
+}
+.no-anim .shipping-blink {
+  opacity: 1 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .float-up {
+    opacity: 0 !important;
+  }
+  .shipping-blink {
+    opacity: 1 !important;
+  }
+}
+
+/* Organizer panel form controls */
+.field {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(239 237 239 / 0.2);
+  background: rgb(0 0 0 / 0.35);
+  padding: 0.5rem 0.75rem;
+  color: var(--color-mist);
+  font-size: 0.95rem;
+  outline: none;
+}
+.field:focus {
+  border-color: var(--color-pink);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgb(239 237 239 / 0.1);
+  border: 1px solid rgb(239 237 239 / 0.15);
+  color: var(--color-mist);
+  cursor: pointer;
+}
+.btn:hover {
+  background: rgb(239 237 239 / 0.18);
+}
+.btn-primary {
+  background: var(--color-pink);
+  color: var(--color-void);
+  border-color: transparent;
+}
+.btn-primary:hover {
+  background: #ffa5e9;
+}
+.btn-active {
+  background: var(--color-teal);
+  color: var(--color-void);
+  border-color: transparent;
+}
